@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Método Gauss-Jordan</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}" />
+    <script defer src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+</head>
+<body class="bg-dark" data-bs-theme="dark">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="/static/Logo Personal - Blanco.png" alt="Logo" height="24" class="d-inline-block align-text-top">
+                Roberto Rodríguez
+            </a>
+        </div>
+    </nav>
+    <div class="container text-center text-body mt-4">
+        <h1 class="mb-4">Resolver Sistema de Ecuaciones Lineales</h1>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col">
+                <form id="equationForm" class="needs-validation" action="/solve/{{ n }}" method="post" onsubmit="return validateForm()" novalidate>
+                    {% for items in matrix %}
+                    {% set outerLoop = loop %}
+                    <div class="input-group mb-2 has-validation">
+                        {% for item in items %}
+                        <input name="{{ outerLoop.index }}_{{ loop.index }}" type="number" step="0.0001" class="form-control rounded text-end equation-input" aria-label="Default" required>
+                        <span class="input-group-text bg-dark border-0 fs-5">x<sub>{{ loop.index }}</sub>
+                            {% if not loop.last %}
+                            <pre> </pre>+
+                            {% else %}
+                            <pre> </pre>=
+                            {% endif %}
+                        </span>
+                        {% endfor %}
+                        <input name="{{ loop.index }}_{{ n+1 }}" type="number" class="form-control rounded text-end equation-input"aria-label="Default" required>
+                        </div>
+                    {% endfor %}
+                    <p><br></p>
+                    <button type="button" class="btn" onclick="randomizeInputs()">Valores Aleatorios</button>
+                    <input type="submit" class="btn" value="Resolver"></input>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="footer fixed-bottom">
+        <div class="row p4 justify-content-center fs-10 mt-5 mb-3">
+            <div class="col-8 col-sm-auto text-center">
+                <p class="mb-0 text-600">
+                    Todos los derechos reservados
+                    <span class="d-none d-sm-inline-block">| </span>
+                    <br class="d-sm-none"> 2025 © 
+                    <a href="https://github.com/robertojrdz/gauss-jordan-solver">
+                        Roberto Rodríguez
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+    <script>
+        function randomizeInputs() {
+            document.querySelectorAll(".equation-input").forEach(input => {
+                input.value = Math.floor(Math.random() * 41 - 20);
+            });
+        }
+    </script>
+</body>

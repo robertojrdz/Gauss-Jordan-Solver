@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Método Gauss-Jordan</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}" />
+    <script defer src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+</head>
+<body class="bg-dark" data-bs-theme="dark">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="/static/Logo Personal - Blanco.png" alt="Logo" height="24" class="d-inline-block align-text-top">
+                Roberto Rodríguez
+            </a>
+        </div>
+    </nav>
+    <div class="container text-center mt-4">
+        <h1 class="mb-4">Solución del Sistema de Ecuaciones Lineales</h1>
+        <math display="block" class="fs-4">
+            <mtable columnalign="{% for i in matrix %}{% if loop.last %}right {% else %}right right {% endif %}{% endfor %} left left left">
+                {% for items in matrix %}
+                <mtr>
+                    {% for item in items %}
+                    <mtd>
+                        {% if not loop.last %}
+                        {% if item != 0 %}
+                        {% if item < 0 %} {% if not loop.first %} <mo>-</mo>
+                    </mtd>
+                    <mtd>
+                        {% else %}
+                        <mo>-</mo>
+                        {% endif %}
+                        {% else %}
+                        {% if not loop.first %}
+                        <mo>+</mo>
+                    </mtd>
+                    <mtd>
+                        {% endif %}
+                        {% endif %}
+                        {% if item.is_integer() %}
+                        <mn>{{ item | int | abs }}</mn>
+                        {% else %}
+                        <mn>{{ item | abs | fraction }}</mn>
+                        {% endif %}
+                        <msub>
+                            <mi>x</mi>
+                            <mn>{{ loop.index }}</mn>
+                        </msub>
+                        {% else %}
+                    </mtd>
+                    <mtd>
+                        {% endif %}
+                        {% else %}
+                        {% if item < 0 %} <mo>=</mo>
+                    </mtd>
+                    <mtd>
+                        <mo>-</mo>
+                    </mtd>
+                    <mtd>
+                        {% else %}
+                        <mo>=</mo>
+                    </mtd>
+                    <mtd></mtd>
+                    <mtd>
+                        {% endif %}
+                        {% if item.is_integer() %}
+                        <mn>{{ item | int | abs }}</mn>
+                        {% else %}
+                        <mn>{{ item | abs | fraction }}</mn>
+                        {% endif %}
+                        {% endif %}
+                    </mtd>
+                    {% endfor %}
+                </mtr>
+                {% endfor %}
+            </mtable>
+        </math>
+        <p> <br></p>
+        <div class="container text-center fs-4">
+            <div class="row row-cols-auto justify-content-evenly">
+                {% for step in steps %}
+                <div class="col">
+                    <math display="block">
+                        <mrow>
+                            <mo>(</mo>
+                            <mtable columnlines="{% for items in step %}{% if loop.last %}solid {% else %}none {% endif %}{% endfor %}none">
+                                {% for items in step %}
+                                <mtr>
+                                    {% for item in items %}
+                                    <mtd>
+                                        {% if item.is_integer() %}
+                                        <mn>{{ item | int }}</mn>
+                                        {% else %}
+                                        <mn>{{ item | fraction }}</mn>
+                                        {% endif %}
+                                    </mtd>
+                                    {% endfor %}
+                                </mtr>
+                                {% endfor %}
+                            </mtable>
+                            <mo>)</mo>
+                        </mrow>
+                    </math>
+                    {% if loop.first %}
+                    <p>Construimos la Matriz Asociada</p>
+                    <br>
+                    {% elif loop.last %}
+                    <p>Obtenemos la matriz identidad</p>
+                    <br>
+                    {% else %}
+                    <p>Paso {{ loop.index }}</p>
+                    <br>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <p>La solución al sistema de ecuaciones lineales es:</p>
+            <math display="block">
+                <mtable columnalign="left">
+                    {% for x in solution %}
+                    <mtr>
+                        <msub>
+                            <mi>x</mi>
+                            <mn>{{ loop.index }}</mn>
+                        </msub>
+                        <mo>=</mo>
+                        {% if x.is_integer() %}
+                        <mn>{{ x | int }}</mn>
+                        {% else %}
+                        <mn>{{ x | fraction }}</mn>
+                        {% endif %}
+                    </mtr>
+                    {% endfor %}
+                </mtable>
+            </math>
+        </div>
+        <button class="btn btn-indigo mt-5" onclick="location.href = '/';">Regresar</button>
+    </div>
+    <footer class="footer">
+        <div class="row p4 justify-content-center fs-10 mt-5 mb-3">
+            <div class="col-8 col-sm-auto text-center">
+                <p class="mb-0 text-600">Todos los derechos reservados <span class="d-none d-sm-inline-block">|
+                    </span><br class="d-sm-none"> 2025 © <a href="https://github.com/robertojrdz/gauss-jordan-solver">Roberto Rodríguez</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>

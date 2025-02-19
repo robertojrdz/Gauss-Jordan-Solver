@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Método Gauss-Jordan</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}" />
+    <script defer src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+</head>
+<body class="bg-dark" data-bs-theme="dark">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="/static/Logo Personal - Blanco.png" alt="Logo" height="24" class="d-inline-block align-text-top">
+                Roberto Rodríguez
+            </a>
+        </div>
+    </nav>
+    <div class="container text-body">
+        <form class="vstack gap-4" name="form" action="/entry" method="post" onsubmit="return validateForm()" required>
+            <h1 class="text-center mt-4">Resolver Sistema de Ecuaciones Lineales</h1>
+            <div class="row justify-content-sm-center">
+                <div class="col-sm-auto">
+                    <label for="n" class="form-label">Cantidad de Variables</label>
+                    <input type="number" class="form-control" name="n" min="2" max="9" placeholder="Ejemplo: 2, 3, 4 ...">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-auto d-flex">
+                    <input type="submit" class="btn" value="Construir Sistema de Ecuaciones"></input>
+                </div>
+            </div>
+        </form>
+    </div>
+    <footer class="footer fixed-bottom">
+        <div class="row p4 justify-content-center fs-10 mt-5 mb-3">
+            <div class="col-8 col-sm-auto text-center">
+                <p class="mb-0 text-600">Todos los derechos reservados <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none"> 2025 © <a href="https://github.com/robertojrdz/gauss-jordan-solver">Roberto Rodríguez</a></p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function validateForm() {
+            var x = document.forms["form"]["n"].value;
+            if (x == "") {
+                alert("Se deben rellenar los campos");
+                return false;
+            }
+        }
+    </script>
+</body>
